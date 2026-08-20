@@ -107,7 +107,21 @@ img { max-width: 100%; display: block; }
 [data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 96px 0 64px; }
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 96px 0 64px;
+  background:
+    radial-gradient(900px 480px at 50% -12%, rgba(245,166,35,.16), transparent 65%),
+    radial-gradient(640px 420px at 12% 108%, rgba(251,146,60,.10), transparent 70%),
+    radial-gradient(720px 460px at 90% 90%, rgba(217,119,6,.10), transparent 70%),
+    var(--bg);
+}
+.hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
 .hero-particles { position: absolute; inset: 0; z-index: 0; }
 .hero .container { position: relative; z-index: 1; text-align: center; }
 .hero-avatar { width: 112px; height: 112px; border-radius: 50%; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--accent)); display: grid; place-items: center; font-family: var(--font-display); font-size: 44px; font-weight: 700; color: #1A120A; box-shadow: 0 0 0 6px var(--brand-tint), 0 12px 40px -8px rgba(245,166,35,.5); }

@@ -69,26 +69,46 @@
     sections.forEach(function (s) { spy.observe(s); });
   }
 
-  /* ---------- 粒子背景（仅 hero 存在时） ---------- */
+  /* ---------- 星空连线粒子背景（仅 hero 存在时） ---------- */
   var canvas = document.getElementById('particles');
   if (canvas) {
     var ctx = canvas.getContext('2d');
-    var W = 0, H = 0, pts = [];
+    var W = 0, H = 0, pts = [], mouse = { x: -9999, y: -9999 };
     function resize() {
       W = canvas.width = canvas.offsetWidth || canvas.parentNode.offsetWidth;
       H = canvas.height = canvas.offsetHeight || canvas.parentNode.offsetHeight;
     }
     resize();
     window.addEventListener('resize', resize);
-    var N = 60;
+
+    // 粒子数量随屏幕面积自适应
+    var N = Math.min(140, Math.max(50, Math.round(W * H / 12000)));
     for (var i = 0; i < N; i++) {
       pts.push({
         x: Math.random() * W, y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 1.6 + 0.4
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.8 + 0.5
       });
     }
-    var color = getComputedStyle(root).getPropertyValue('--brand').trim() || '#F5A623';
+
+    var brand = getComputedStyle(root).getPropertyValue('--brand').trim() || '#F5A623';
+    var accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#FB923C';
+    function hexToRgb(h) {
+      h = h.replace('#', '');
+      if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+      var n = parseInt(h, 16);
+      return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+    var cA = hexToRgb(brand), cB = hexToRgb(accent);
+
+    // 鼠标跟随（桌面端）
+    canvas.addEventListener('mousemove', function (e) {
+      var rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseleave', function () { mouse.x = -9999; mouse.y = -9999; });
+
+    var LINK_DIST = 130;
     function tick() {
       ctx.clearRect(0, 0, W, H);
       for (var j = 0; j < pts.length; j++) {
@@ -96,13 +116,50 @@
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
+
+        // 鼠标附近的粒子被轻微吸引
+        var dxm = p.x - mouse.x, dym = p.y - mouse.y;
+        var dm = Math.sqrt(dxm * dxm + dym * dym);
+        if (dm < 140 && dm > 0.01) {
+          p.x -= dxm / dm * 0.5; p.y -= dym / dm * 0.5;
+        }
+
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.globalAlpha = 0.35;
+        // 颜色在品牌色与强调色之间渐变
+        var mix = Math.abs(Math.sin(j * 0.7));
+        ctx.fillStyle = 'rgba(' + Math.round(cA.r + (cB.r - cA.r) * mix) + ',' + Math.round(cA.g + (cB.g - cA.g) * mix) + ',' + Math.round(cA.b + (cB.b - cA.b) * mix) + ',0.7)';
         ctx.fill();
       }
-      ctx.globalAlpha = 1;
+
+      // 粒子间连线（距离近才连，透明度随距离衰减）
+      for (var a = 0; a < pts.length; a++) {
+        for (var b = a + 1; b < pts.length; b++) {
+          var dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y;
+          var d2 = dx * dx + dy * dy;
+          if (d2 < LINK_DIST * LINK_DIST) {
+            var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.28;
+            ctx.strokeStyle = 'rgba(' + cA.r + ',' + cA.g + ',' + cA.b + ',' + alpha + ')';
+            ctx.lineWidth = 0.7;
+            ctx.beginPath();
+            ctx.moveTo(pts[a].x, pts[a].y);
+            ctx.lineTo(pts[b].x, pts[b].y);
+            ctx.stroke();
+          }
+        }
+        // 鼠标与粒子的连线更亮
+        var dxm = pts[a].x - mouse.x, dym = pts[a].y - mouse.y;
+        var dm2 = dxm * dxm + dym * dym;
+        if (dm2 < LINK_DIST * LINK_DIST) {
+          ctx.strokeStyle = 'rgba(' + cA.r + ',' + cA.g + ',' + cA.b + ',' + (0.5 * (1 - Math.sqrt(dm2) / LINK_DIST)) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(pts[a].x, pts[a].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        }
+      }
+
       requestAnimationFrame(tick);
     }
     tick();
