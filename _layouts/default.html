@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'zh-CN' }}">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  {% include header.html %}
+
+  <main id="main" class="site-main">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <script>
+    (function () {
+      var toggle = document.getElementById('theme-toggle');
+      var root = document.documentElement;
+      function current() {
+        return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      }
+      if (!toggle) return;
+      toggle.addEventListener('click', function () {
+        var next = current() === 'dark' ? 'light' : 'dark';
+        if (next === 'dark') root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        try { localStorage.setItem('hedongli1-theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>

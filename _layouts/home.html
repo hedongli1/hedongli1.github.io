@@ -1,0 +1,53 @@
+---
+layout: default
+---
+
+<!-- Hero：整页唯一的视觉锚点，暖色系品牌色 -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Personal blog · 个人博客</p>
+    <h1 class="hero-title">Hi, I'm <span class="hero-name">{{ site.title }}</span><span class="hero-dot">.</span></h1>
+    <p class="hero-sub">{{ site.tagline }}</p>
+    <p class="hero-desc">{{ site.description }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ '/about/' | relative_url }}">了解我<span class="btn-arrow"> →</span></a>
+      <a class="btn btn-ghost" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub<span class="btn-arrow"> ↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 最新文章：卡片网格 -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">最新文章</h2>
+      <span class="section-meta">{{ site.posts.size }} 篇</span>
+    </div>
+    <div class="post-grid">
+      {% for post in site.posts %}
+      <a class="post-card" href="{{ post.url | relative_url }}">
+        <span class="post-card-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        <h3 class="post-card-title">{{ post.title }}</h3>
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 90 }}</p>
+        <span class="post-card-more">阅读<span class="btn-arrow"> →</span></span>
+      </a>
+      {% else %}
+      <div class="empty-card">
+        <p class="empty-card-title">文章陆续上线中</p>
+        <p class="empty-card-sub">第一篇内容正在路上，敬请期待。</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 关于我：简引导读 -->
+<section class="section section-muted">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">关于</h2>
+    </div>
+    <p class="about-teaser">{{ site.description_en }}</p>
+    <a class="btn btn-secondary" href="{{ '/about/' | relative_url }}">查看完整介绍<i class="btn-arrow"> →</i></a>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+# ============================================================
+# 站点配置 · hedongli1 个人博客
+# 部署到 GitHub Pages 后，改这里的内容即可，无需动代码
+# 所有带 TODO 的字段：上线前请替换为你的真实信息
+# ============================================================
+
+title: hedongli1                 # 站点名（导航、页脚、SEO 用）
+tagline: 在代码与灵感之间搭建桥梁   # TODO 换成你的一句话定位
+
+email: you@example.com           # TODO 替换为真实邮箱（用于 RSS / SEO）
+description: >-                  # TODO 换成你的一句话中文简介
+  一个持续学习、持续构建的开发者的个人博客与作品集。
+description_en: >-               # TODO 换成你的一句话英文简介
+  A developer building in public — notes, projects, and thoughts.
+
+url: "https://hedongli1.github.io"   # 你的站点地址（上线后就是这个）
+baseurl: ""                          # 站点托管在仓库根目录时保持空字符串
+github_username: hedongli1          # 你的 GitHub 用户名（真实）
+
+# 语言默认中文
+lang: zh-CN
+
+# ---------------- 社交链接（TODO 按需增删、填真实地址）----------------
+social:
+  github: https://github.com/hedongli1
+  email: mailto:you@example.com        # TODO 替换真实邮箱
+  # twitter: https://twitter.com/your_handle
+  # linkedin: https://linkedin.com/in/your_handle
+  # zhihu: https://www.zhihu.com/people/your_handle
+  # juejin: https://juejin.cn/user/your_id
+
+# ---------------- 构建设置（一般不用改）----------------
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .gitignore
+  - vendor

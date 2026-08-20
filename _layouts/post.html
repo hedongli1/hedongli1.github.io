@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<article class="post">
+  <div class="container post-container">
+    <header class="post-header">
+      <a class="back-link" href="{{ '/' | relative_url }}">← 返回首页</a>
+      <h1 class="post-title">{{ page.title }}</h1>
+      <p class="post-meta">
+        <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+        {% if page.tags %}
+          {% for tag in page.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
+        {% endif %}
+      </p>
+    </header>
+
+    <div class="post-body">
+      {{ content }}
+    </div>
+
+    <footer class="post-footer">
+      <a class="btn btn-secondary" href="{{ '/' | relative_url }}">← 回到文章列表</a>
+    </footer>
+  </div>
+</article>
