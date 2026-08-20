@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<div class="page-head">
+  <div class="container">
+    <p class="section-kicker">Blog</p>
+    <h1 class="page-title">博客<span class="dot">.</span></h1>
+    <p class="page-lead">技术笔记、项目复盘、随笔思考。</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="post-grid">
+    {% for post in site.posts %}
+    <a class="post-card" href="{{ post.url | relative_url }}">
+      <span class="post-card-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 90 }}</p>
+      <span class="more">阅读 →</span>
+    </a>
+    {% else %}
+    <div class="empty-card">文章陆续上线中</div>
+    {% endfor %}
+  </div>
+</div>

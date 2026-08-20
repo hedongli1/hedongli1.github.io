@@ -2,52 +2,167 @@
 layout: default
 ---
 
-<!-- Hero：整页唯一的视觉锚点，暖色系品牌色 -->
-<section class="hero">
+<!-- ============ Hero ============ -->
+<section class="hero" id="home">
+  <canvas class="hero-particles" id="particles" aria-hidden="true"></canvas>
   <div class="container">
-    <p class="hero-eyebrow">Personal blog · 个人博客</p>
-    <h1 class="hero-title">Hi, I'm <span class="hero-name">{{ site.title }}</span><span class="hero-dot">.</span></h1>
-    <p class="hero-sub">{{ site.tagline }}</p>
+    <div class="hero-avatar" aria-hidden="true">h</div>
+    <p class="hero-eyebrow">Developer · Builder</p>
+    <h1 class="hero-name">Hi, I'm {{ site.title }}<span class="dot">.</span></h1>
+    <p class="hero-motto">{{ site.tagline }}</p>
     <p class="hero-desc">{{ site.description }}</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="{{ '/about/' | relative_url }}">了解我<span class="btn-arrow"> →</span></a>
+      <a class="btn btn-primary" href="#project">看我的项目<span class="btn-arrow"> ↓</span></a>
+      <a class="btn btn-ghost" href="{{ '/blog/' | relative_url }}">读博客<span class="btn-arrow"> →</span></a>
+    </div>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- ============ 关于 ============ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-kicker">About</p>
+      <h2 class="section-title">关于我<span class="dot">.</span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>{{ site.description }}</p>
+        <!-- TODO：用 2-3 句写清楚你是谁、在做什么、能带来什么价值 -->
+        <p>{{ site.description_en }}</p>
+      </div>
+      <div class="info-card">
+        <div class="info-row"><span class="k">Name</span><span class="v">{{ site.title }}</span></div>
+        <div class="info-row"><span class="k">Focus</span><span class="v">TODO 你的方向</span></div>
+        <div class="info-row"><span class="k">Location</span><span class="v">TODO 城市</span></div>
+        <div class="info-row"><span class="k">GitHub</span><span class="v">{{ site.github_username }}</span></div>
+        <div class="info-row"><span class="k">Email</span><span class="v">{{ site.email }}</span></div>
+        <div class="info-row"><span class="k">Open to</span><span class="v">TODO 机会类型</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 技能 ============ -->
+<section class="section section-alt" id="skill">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-kicker">Skills</p>
+      <h2 class="section-title">技术栈<span class="dot">.</span></h2>
+      <p class="section-lead"><!-- TODO：一句话概括你的技术方向 -->用代码解决问题，也在持续拓宽边界。</p>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-item">
+        <div class="skill-head"><span class="skill-name">前端开发</span><span class="skill-level">85%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-level="85"></div></div>
+        <div class="skill-tags"><span class="skill-tag">TypeScript</span><span class="skill-tag">React</span><span class="skill-tag">Vue</span></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head"><span class="skill-name">后端开发</span><span class="skill-level">70%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-level="70"></div></div>
+        <div class="skill-tags"><span class="skill-tag">Node.js</span><span class="skill-tag">Python</span></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head"><span class="skill-name">工程化</span><span class="skill-level">75%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-level="75"></div></div>
+        <div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">Linux</span><span class="skill-tag">Docker</span></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head"><span class="skill-name">数据库</span><span class="skill-level">60%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-level="60"></div></div>
+        <div class="skill-tags"><span class="skill-tag">PostgreSQL</span><span class="skill-tag">Redis</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目 ============ -->
+<section class="section" id="project">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-kicker">Projects</p>
+      <h2 class="section-title">精选项目<span class="dot">.</span></h2>
+    </div>
+    <div class="project-grid">
+      <!-- TODO：把「项目一 / 项目二」换成真实仓库，链接改成对应地址 -->
+      <a class="project-card" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">TODO</span><span class="project-lang">TypeScript</span></div>
+        <h3>项目一</h3>
+        <p>一句话说清这个项目解决了什么问题。</p>
+        <div class="project-links"><span>查看 →</span></div>
+      </a>
+      <a class="project-card" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">TODO</span><span class="project-lang">Python</span></div>
+        <h3>项目二</h3>
+        <p>一句话说清这个项目解决了什么问题。</p>
+        <div class="project-links"><span>查看 →</span></div>
+      </a>
+      <a class="project-card project-card-empty" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">coming soon</span></div>
+        <h3>你的下一个项目</h3>
+        <p>仓库建好后，把它挂到这里。</p>
+        <div class="project-links"><span>GitHub →</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 经历 ============ -->
+<section class="section section-alt" id="work">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-kicker">Experience</p>
+      <h2 class="section-title">经历<span class="dot">.</span></h2>
+    </div>
+    <ol class="timeline">
+      <li class="timeline-item">
+        <span class="timeline-dot" aria-hidden="true"></span>
+        <span class="timeline-date">2026.08</span>
+        <h3 class="timeline-title">加入 GitHub，开始持续构建</h3>
+        <span class="timeline-org">从这里开始记录</span>
+        <p class="timeline-text">从零搭建个人主页与博客，开始沉淀项目与思考。</p>
+      </li>
+      <!-- TODO：补充教育 / 工作 / 开源经历，每条加一个 timeline-item -->
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 亮点 ============ -->
+<section class="section" id="others">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-kicker">Highlights</p>
+      <h2 class="section-title">近况亮点<span class="dot">.</span></h2>
+    </div>
+    <div class="highlight-grid">
+      <div class="highlight-card"><div class="highlight-num">2</div><div class="highlight-label">项目</div></div>
+      <div class="highlight-card"><div class="highlight-num">1</div><div class="highlight-label">文章</div></div>
+      <div class="highlight-card"><div class="highlight-num">∞</div><div class="highlight-label">好奇心</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 联系 ============ -->
+<section class="section section-alt" id="contact">
+  <div class="container contact-inner">
+    <p class="section-kicker">Contact</p>
+    <h2 class="contact-title">保持连接<span class="dot">.</span></h2>
+    <p class="contact-sub">有想法、有合作、或者只是想打个招呼，都欢迎。</p>
+    <div class="contact-actions">
+      <a class="btn btn-primary" href="mailto:{{ site.email }}">Email me<span class="btn-arrow"> ↗</span></a>
       <a class="btn btn-ghost" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub<span class="btn-arrow"> ↗</span></a>
     </div>
+    <div class="contact-mail">{{ site.email }}</div>
   </div>
 </section>
 
-<!-- 最新文章：卡片网格 -->
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">最新文章</h2>
-      <span class="section-meta">{{ site.posts.size }} 篇</span>
-    </div>
-    <div class="post-grid">
-      {% for post in site.posts %}
-      <a class="post-card" href="{{ post.url | relative_url }}">
-        <span class="post-card-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        <h3 class="post-card-title">{{ post.title }}</h3>
-        <p class="post-card-excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 90 }}</p>
-        <span class="post-card-more">阅读<span class="btn-arrow"> →</span></span>
-      </a>
-      {% else %}
-      <div class="empty-card">
-        <p class="empty-card-title">文章陆续上线中</p>
-        <p class="empty-card-sub">第一篇内容正在路上，敬请期待。</p>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<!-- 关于我：简引导读 -->
-<section class="section section-muted">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">关于</h2>
-    </div>
-    <p class="about-teaser">{{ site.description_en }}</p>
-    <a class="btn btn-secondary" href="{{ '/about/' | relative_url }}">查看完整介绍<i class="btn-arrow"> →</i></a>
-  </div>
-</section>
+<!-- 右侧分区导航 -->
+<nav class="dot-nav" aria-label="分区导航">
+  <a href="#about" title="关于"></a>
+  <a href="#skill" title="技能"></a>
+  <a href="#project" title="项目"></a>
+  <a href="#work" title="经历"></a>
+  <a href="#others" title="亮点"></a>
+  <a href="#contact" title="联系"></a>
+</nav>

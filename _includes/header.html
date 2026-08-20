@@ -1,4 +1,4 @@
-<header class="site-header">
+<header class="site-header" id="site-header">
   <div class="container header-inner">
     <a class="brand" href="{{ '/' | relative_url }}">
       <span class="brand-mark" aria-hidden="true">h</span>
@@ -6,9 +6,12 @@
     </a>
 
     <nav class="site-nav" aria-label="主导航">
-      <a class="nav-link" href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>首页</a>
-      <a class="nav-link" href="{{ '/about/' | relative_url }}" {% if page.url == '/about/' %}aria-current="page"{% endif %}>关于</a>
-      <a class="nav-link" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a>
+      <a class="nav-link" href="{{ '/#about' | relative_url }}">关于</a>
+      <a class="nav-link" href="{{ '/#skill' | relative_url }}">技能</a>
+      <a class="nav-link" href="{{ '/#project' | relative_url }}">项目</a>
+      <a class="nav-link" href="{{ '/#work' | relative_url }}">经历</a>
+      <a class="nav-link" href="{{ '/blog/' | relative_url }}">博客</a>
+      <a class="nav-link" href="{{ '/#contact' | relative_url }}">联系</a>
     </nav>
 
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换明暗主题" title="切换明暗主题">
