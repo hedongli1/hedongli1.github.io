@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 记账本 Ledger 开发复盘：从零手写一个全栈应用
-date: 2026-08-22 18:30:00 +0800
+date: 2026-08-22 08:00:00 +0800
 tags: [项目复盘, 全栈开发, Vue3, Node.js, SQLite]
 ---
 
