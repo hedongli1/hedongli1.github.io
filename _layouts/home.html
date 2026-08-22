@@ -6,7 +6,8 @@ layout: default
 <section class="hero" id="home">
   <div class="container hero-inner">
     <p class="hero-eyebrow">Developer · Builder</p>
-    <h1 class="hero-name">Hi, I'm {{ site.title }}<span class="dot">.</span></h1>
+    <h1 class="hero-name">Hi, I'm <span class="gold-text">{{ site.title }}</span><span class="dot">.</span></h1>
+    <p class="hero-status"><span class="pulse-dot" aria-hidden="true"></span> Open to opportunities · 可合作交流</p>
     <p class="hero-motto">{{ site.tagline }}</p>
     <p class="hero-desc">{{ site.description }}</p>
     <div class="hero-actions">
@@ -38,6 +39,11 @@ layout: default
         <div class="info-row"><span class="k">Email</span><span class="v">{{ site.email }}</span></div>
         <div class="info-row"><span class="k">Open to</span><span class="v">TODO 机会类型</span></div>
       </div>
+    </div>
+    <div class="stats-band">
+      <div class="stat-item"><div class="stat-num" data-count="2">0</div><div class="stat-label">精选项目</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="{{ site.posts.size }}">0</div><div class="stat-label">已发布文章</div></div>
+      <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">持续探索</div></div>
     </div>
   </div>
 </section>

@@ -261,6 +261,40 @@ img { max-width: 100%; display: block; }
 .footer-links a { font-size: 14px; color: var(--ink-2); }
 .footer-links a:hover { color: var(--brand-strong); }
 
+/* ============ 视觉丰富化 ============ */
+/* 滚动渐入 */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* 金色渐层文字（流动 shimmer） */
+.gold-text { background: linear-gradient(120deg, var(--brand) 0%, var(--brand-strong) 40%, #fff3d6 50%, var(--brand-strong) 60%, var(--brand) 100%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: goldShimmer 6s linear infinite; }
+@keyframes goldShimmer { to { background-position: -200% center; } }
+
+/* 卡片 hover 炫光扫过 + 发光 */
+.project-card, .post-card { position: relative; overflow: hidden; }
+.project-card::before, .post-card::before { content: ""; position: absolute; top: 0; left: -80%; width: 60%; height: 100%; background: linear-gradient(105deg, transparent, rgba(245,195,75,.16), transparent); transform: skewX(-20deg); transition: left .6s ease; pointer-events: none; z-index: 0; }
+.project-card:hover::before, .post-card:hover::before { left: 130%; }
+.project-card:hover, .post-card:hover { border-color: var(--brand-soft); box-shadow: 0 0 0 1px rgba(245,166,35,.3), 0 16px 40px -14px rgba(245,166,35,.35); }
+.project-card > *, .post-card > * { position: relative; z-index: 1; }
+
+/* 技能条发光 */
+.skill-fill { box-shadow: 0 0 14px rgba(245,166,35,.5), 0 0 4px rgba(245,166,35,.8); }
+
+/* 首屏状态徽章（脉冲绿点） */
+.hero-status { display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(245,166,35,.35); background: var(--brand-tint); font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); }
+.hero-status .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #35d17a; animation: pulseRing 2s infinite; }
+@keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(53,209,122,.55); } 70% { box-shadow: 0 0 0 8px rgba(53,209,122,0); } 100% { box-shadow: 0 0 0 0 rgba(53,209,122,0); } }
+
+/* 数据统计条 */
+.stats-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+.stat-item { text-align: center; padding: 22px 16px; border-radius: var(--radius-card); background: var(--card); border: 1px solid var(--line); }
+.stat-num { font-family: var(--font-display); font-size: 34px; font-weight: 700; color: var(--brand); }
+.stat-label { margin-top: 6px; font-size: 13px; color: var(--ink-3); }
+
+/* 分区金色分隔线 */
+.section-head { position: relative; padding-bottom: 18px; }
+.section-head::after { content: ""; position: absolute; left: 0; bottom: 0; width: 60px; height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--brand), transparent); }
+
 /* ---------- 响应式 ---------- */
 @media (max-width: 900px) {
   .about-grid { grid-template-columns: 1fr; }
@@ -274,6 +308,7 @@ img { max-width: 100%; display: block; }
   .section { padding: 64px 0; }
   .hero { min-height: auto; padding: 120px 0 80px; }
   .project-grid, .post-grid, .skill-grid { grid-template-columns: 1fr; }
+  .stats-band { grid-template-columns: 1fr; }
   .post { padding: 96px 0 56px; }
   .page-head { padding: 96px 0 32px; }
 }
