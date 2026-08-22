@@ -106,35 +106,24 @@ img { max-width: 100%; display: block; }
 [data-theme="light"] .theme-toggle .icon-sun { display: none; }
 [data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
-/* ---------- Hero ---------- */
-.hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 96px 0 64px;
+/* ---------- 全页固定背景（星云 + 星空粒子，铺满整页） ---------- */
+.bg-fx { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.bg-nebula { position: absolute; inset: 0;
   background:
-    radial-gradient(900px 480px at 50% -12%, rgba(245,166,35,.16), transparent 65%),
-    radial-gradient(720px 460px at 90% 90%, rgba(217,119,6,.12), transparent 70%),
-    var(--bg);
-}
-/* 星云流体层：两层金色光雾缓慢漂移 */
-.hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(560px 380px at 78% 16%, rgba(245,195,75,.20), transparent 72%),
-    radial-gradient(520px 420px at 16% 82%, rgba(251,146,60,.13), transparent 72%),
-    radial-gradient(420px 340px at 50% 40%, rgba(245,166,35,.08), transparent 72%);
+    radial-gradient(900px 480px at 72% 20%, rgba(245,166,35,.20), transparent 70%),
+    radial-gradient(720px 460px at 18% 76%, rgba(251,146,60,.13), transparent 70%),
+    radial-gradient(560px 420px at 50% 46%, rgba(245,195,75,.09), transparent 72%);
   filter: blur(14px);
-  animation: nebulaShift 16s ease-in-out infinite alternate;
+  animation: nebulaShift 18s ease-in-out infinite alternate;
 }
 @keyframes nebulaShift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: .7; }
-  100% { transform: translate3d(-40px, -28px, 0) scale(1.14); opacity: 1; }
+  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: .75; }
+  100% { transform: translate3d(-50px, -34px, 0) scale(1.16); opacity: 1; }
 }
-.hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-  background-size: 44px 44px;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
-}
-.hero-particles { position: absolute; inset: 0; z-index: 1; }
+.bg-fx canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 96px 0 64px; background: transparent; }
 .hero .container { position: relative; z-index: 2; text-align: center; will-change: transform, opacity; }
 .hero-avatar { width: 112px; height: 112px; border-radius: 50%; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--accent)); display: grid; place-items: center; font-family: var(--font-display); font-size: 44px; font-weight: 700; color: #1A120A; box-shadow: 0 0 0 6px var(--brand-tint), 0 12px 40px -8px rgba(245,166,35,.5); }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--brand); margin-bottom: 16px; }
@@ -157,7 +146,7 @@ img { max-width: 100%; display: block; }
 
 /* ---------- 分区通用 ---------- */
 .section { padding: 88px 0; }
-.section-alt { background: var(--bg-2); }
+.section-alt { background: transparent; }
 .section-head { margin-bottom: 48px; }
 .section-kicker { font-family: var(--font-mono); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--brand); margin-bottom: 12px; }
 .section-title { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.01em; }
@@ -264,7 +253,8 @@ img { max-width: 100%; display: block; }
 .dot-nav a:hover { opacity: 1; }
 
 /* ---------- 页脚 ---------- */
-.site-footer { border-top: 1px solid var(--line); padding: 40px 0; }
+.site-main { position: relative; z-index: 1; }
+.site-footer { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 40px 0; }
 .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .footer-note { font-size: 14px; color: var(--ink-3); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }

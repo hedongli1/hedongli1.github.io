@@ -76,8 +76,8 @@
     var W = 0, H = 0, pts = [], meteors = [], mouse = { x: -9999, y: -9999 };
 
     function resize() {
-      W = canvas.width = canvas.offsetWidth || canvas.parentNode.offsetWidth;
-      H = canvas.height = canvas.offsetHeight || canvas.parentNode.offsetHeight;
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
     }
     resize();
     window.addEventListener('resize', resize);
@@ -107,12 +107,11 @@
       return 'rgba(' + Math.round(cA.r + (cB.r - cA.r) * mix) + ',' + Math.round(cA.g + (cB.g - cA.g) * mix) + ',' + Math.round(cA.b + (cB.b - cA.b) * mix) + ',' + alpha + ')';
     }
 
-    // 鼠标跟随（桌面端）
-    canvas.addEventListener('mousemove', function (e) {
-      var rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    // 鼠标跟随（整页，含滚动到任意区块时）
+    window.addEventListener('mousemove', function (e) {
+      mouse.x = e.clientX; mouse.y = e.clientY;
     });
-    canvas.addEventListener('mouseleave', function () { mouse.x = -9999; mouse.y = -9999; });
+    window.addEventListener('blur', function () { mouse.x = -9999; mouse.y = -9999; });
 
     // 流星：周期性划过的金色光尾
     function spawnMeteor() {
