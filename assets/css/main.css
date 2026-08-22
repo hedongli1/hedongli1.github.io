@@ -6,15 +6,15 @@
    ============================================================ */
 
 :root {
-  /* 深色（默认） */
-  --bg: #151210;
-  --bg-2: #1B1612;
-  --card: #221C16;
-  --card-2: #2A231A;
-  --ink: #F6EFE4;
-  --ink-2: #C9BFB0;
-  --ink-3: #8E8373;
-  --line: #33291E;
+  /* 深色（默认 · 黑金） */
+  --bg: #0D0B09;
+  --bg-2: #131009;
+  --card: #1A1610;
+  --card-2: #241E15;
+  --ink: #F6F0E4;
+  --ink-2: #CDC3B2;
+  --ink-3: #8A7F6C;
+  --line: #2B2418;
 
   --brand: #F5A623;
   --brand-strong: #FBBF24;
@@ -110,20 +110,32 @@ img { max-width: 100%; display: block; }
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 96px 0 64px;
   background:
     radial-gradient(900px 480px at 50% -12%, rgba(245,166,35,.16), transparent 65%),
-    radial-gradient(640px 420px at 12% 108%, rgba(251,146,60,.10), transparent 70%),
-    radial-gradient(720px 460px at 90% 90%, rgba(217,119,6,.10), transparent 70%),
+    radial-gradient(720px 460px at 90% 90%, rgba(217,119,6,.12), transparent 70%),
     var(--bg);
+}
+/* 星云流体层：两层金色光雾缓慢漂移 */
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(560px 380px at 78% 16%, rgba(245,195,75,.20), transparent 72%),
+    radial-gradient(520px 420px at 16% 82%, rgba(251,146,60,.13), transparent 72%),
+    radial-gradient(420px 340px at 50% 40%, rgba(245,166,35,.08), transparent 72%);
+  filter: blur(14px);
+  animation: nebulaShift 16s ease-in-out infinite alternate;
+}
+@keyframes nebulaShift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: .7; }
+  100% { transform: translate3d(-40px, -28px, 0) scale(1.14); opacity: 1; }
 }
 .hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
   background-size: 44px 44px;
   -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
   mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
 }
-.hero-particles { position: absolute; inset: 0; z-index: 0; }
-.hero .container { position: relative; z-index: 1; text-align: center; }
+.hero-particles { position: absolute; inset: 0; z-index: 1; }
+.hero .container { position: relative; z-index: 2; text-align: center; will-change: transform, opacity; }
 .hero-avatar { width: 112px; height: 112px; border-radius: 50%; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--accent)); display: grid; place-items: center; font-family: var(--font-display); font-size: 44px; font-weight: 700; color: #1A120A; box-shadow: 0 0 0 6px var(--brand-tint), 0 12px 40px -8px rgba(245,166,35,.5); }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--brand); margin-bottom: 16px; }
 .hero-name { font-size: clamp(44px, 8vw, 76px); letter-spacing: -0.02em; }
@@ -221,6 +233,7 @@ img { max-width: 100%; display: block; }
 .post-card p { font-size: 14px; color: var(--ink-2); }
 .post-card .more { margin-top: auto; font-weight: 600; font-size: 14px; color: var(--brand); }
 .empty-card { background: var(--card); border: 1px dashed var(--line); border-radius: var(--radius-card); padding: 44px 24px; text-align: center; color: var(--ink-2); }
+.blog-more { margin-top: 28px; }
 
 /* ---------- 文章页 ---------- */
 .post { padding: 120px 0 80px; }

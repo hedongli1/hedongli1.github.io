@@ -22,16 +22,16 @@
   if (pre) {
     if (document.readyState === 'complete') { setTimeout(hidePreloader, 250); }
     else { window.addEventListener('load', function () { setTimeout(hidePreloader, 350); }); }
-    setTimeout(hidePreloader, 1800); // 兜底，防止资源卡住
+    setTimeout(hidePreloader, 1800);
   }
 
   /* ---------- 头部滚动态 ---------- */
   var header = document.getElementById('site-header');
-  function onScroll() {
+  function onScrollHeader() {
     if (header) header.classList.toggle('scrolled', window.scrollY > 10);
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  window.addEventListener('scroll', onScrollHeader, { passive: true });
+  onScrollHeader();
 
   /* ---------- 技能条动画 ---------- */
   var fills = document.querySelectorAll('.skill-fill');
@@ -69,11 +69,12 @@
     sections.forEach(function (s) { spy.observe(s); });
   }
 
-  /* ---------- 星空连线粒子背景（仅 hero 存在时） ---------- */
+  /* ---------- 全屏粒子背景：星云(底) + 星空连线(中) + 流星(顶) ---------- */
   var canvas = document.getElementById('particles');
   if (canvas) {
     var ctx = canvas.getContext('2d');
-    var W = 0, H = 0, pts = [], mouse = { x: -9999, y: -9999 };
+    var W = 0, H = 0, pts = [], meteors = [], mouse = { x: -9999, y: -9999 };
+
     function resize() {
       W = canvas.width = canvas.offsetWidth || canvas.parentNode.offsetWidth;
       H = canvas.height = canvas.offsetHeight || canvas.parentNode.offsetHeight;
@@ -81,25 +82,30 @@
     resize();
     window.addEventListener('resize', resize);
 
-    // 粒子数量随屏幕面积自适应
-    var N = Math.min(140, Math.max(50, Math.round(W * H / 12000)));
+    // 粒子密度（最强档：随面积自适应，偏密）
+    var N = Math.min(180, Math.max(70, Math.round(W * H / 9000)));
     for (var i = 0; i < N; i++) {
       pts.push({
         x: Math.random() * W, y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
         r: Math.random() * 1.8 + 0.5
       });
     }
 
-    var brand = getComputedStyle(root).getPropertyValue('--brand').trim() || '#F5A623';
-    var accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#FB923C';
+    // 金色系（品牌金 → 亮金 之间渐变）
+    function cssVar(name, fb) { return getComputedStyle(root).getPropertyValue(name).trim() || fb; }
+    var gold = cssVar('--brand', '#F5A623');
+    var goldHi = cssVar('--brand-strong', '#FBBF24');
     function hexToRgb(h) {
       h = h.replace('#', '');
       if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
       var n = parseInt(h, 16);
       return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
     }
-    var cA = hexToRgb(brand), cB = hexToRgb(accent);
+    var cA = hexToRgb(gold), cB = hexToRgb(goldHi);
+    function goldRgba(mix, alpha) {
+      return 'rgba(' + Math.round(cA.r + (cB.r - cA.r) * mix) + ',' + Math.round(cA.g + (cB.g - cA.g) * mix) + ',' + Math.round(cA.b + (cB.b - cA.b) * mix) + ',' + alpha + ')';
+    }
 
     // 鼠标跟随（桌面端）
     canvas.addEventListener('mousemove', function (e) {
@@ -108,38 +114,50 @@
     });
     canvas.addEventListener('mouseleave', function () { mouse.x = -9999; mouse.y = -9999; });
 
+    // 流星：周期性划过的金色光尾
+    function spawnMeteor() {
+      meteors.push({
+        x: Math.random() * W * 0.9 + W * 0.1,
+        y: -20,
+        vx: -(3 + Math.random() * 4),
+        vy: 1.8 + Math.random() * 2,
+        life: 1
+      });
+    }
+    spawnMeteor();
+    setInterval(spawnMeteor, 2600);
+
     var LINK_DIST = 130;
+
     function tick() {
       ctx.clearRect(0, 0, W, H);
+
+      // 星空连线粒子
       for (var j = 0; j < pts.length; j++) {
         var p = pts[j];
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
 
-        // 鼠标附近的粒子被轻微吸引
         var dxm = p.x - mouse.x, dym = p.y - mouse.y;
         var dm = Math.sqrt(dxm * dxm + dym * dym);
-        if (dm < 140 && dm > 0.01) {
-          p.x -= dxm / dm * 0.5; p.y -= dym / dm * 0.5;
+        if (dm < 150 && dm > 0.01) {
+          p.x -= dxm / dm * 0.6; p.y -= dym / dm * 0.6;
         }
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        // 颜色在品牌色与强调色之间渐变
-        var mix = Math.abs(Math.sin(j * 0.7));
-        ctx.fillStyle = 'rgba(' + Math.round(cA.r + (cB.r - cA.r) * mix) + ',' + Math.round(cA.g + (cB.g - cA.g) * mix) + ',' + Math.round(cA.b + (cB.b - cA.b) * mix) + ',0.7)';
+        ctx.fillStyle = goldRgba(Math.abs(Math.sin(j * 0.7)), 0.75);
         ctx.fill();
       }
 
-      // 粒子间连线（距离近才连，透明度随距离衰减）
       for (var a = 0; a < pts.length; a++) {
         for (var b = a + 1; b < pts.length; b++) {
           var dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y;
           var d2 = dx * dx + dy * dy;
           if (d2 < LINK_DIST * LINK_DIST) {
-            var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.28;
-            ctx.strokeStyle = 'rgba(' + cA.r + ',' + cA.g + ',' + cA.b + ',' + alpha + ')';
+            var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.3;
+            ctx.strokeStyle = goldRgba(0.4, alpha);
             ctx.lineWidth = 0.7;
             ctx.beginPath();
             ctx.moveTo(pts[a].x, pts[a].y);
@@ -147,11 +165,10 @@
             ctx.stroke();
           }
         }
-        // 鼠标与粒子的连线更亮
         var dxm = pts[a].x - mouse.x, dym = pts[a].y - mouse.y;
         var dm2 = dxm * dxm + dym * dym;
         if (dm2 < LINK_DIST * LINK_DIST) {
-          ctx.strokeStyle = 'rgba(' + cA.r + ',' + cA.g + ',' + cA.b + ',' + (0.5 * (1 - Math.sqrt(dm2) / LINK_DIST)) + ')';
+          ctx.strokeStyle = goldRgba(0.7, 0.55 * (1 - Math.sqrt(dm2) / LINK_DIST));
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(pts[a].x, pts[a].y);
@@ -160,8 +177,49 @@
         }
       }
 
+      // 流星（金色拖尾 + 白色高点头）
+      for (var m = meteors.length - 1; m >= 0; m--) {
+        var mt = meteors[m];
+        mt.x += mt.vx; mt.y += mt.vy; mt.life -= 0.005;
+        if (mt.life <= 0 || mt.y > H || mt.x < -40) { meteors.splice(m, 1); continue; }
+        var tx = mt.x - mt.vx * 11, ty = mt.y - mt.vy * 11;
+        var grad = ctx.createLinearGradient(mt.x, mt.y, tx, ty);
+        grad.addColorStop(0, goldRgba(0.7, 0.85 * mt.life));
+        grad.addColorStop(1, goldRgba(0.2, 0));
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(mt.x, mt.y);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(mt.x, mt.y, 1.7, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.9 * mt.life) + ')';
+        ctx.fill();
+      }
+
       requestAnimationFrame(tick);
     }
     tick();
   }
+
+  /* ---------- 首屏滚动视差（内容上移渐隐，增强纵深） ---------- */
+  var heroEl = document.querySelector('.hero');
+  var heroInner = heroEl ? heroEl.querySelector('.container') : null;
+  var heroHint = document.querySelector('.hero-scroll');
+  function onScrollParallax() {
+    if (!heroEl) return;
+    var sc = window.scrollY;
+    var h = heroEl.offsetHeight || 1;
+    if (sc <= h) {
+      var p = sc / h;
+      if (heroInner) {
+        heroInner.style.transform = 'translate3d(0,' + (p * 70) + 'px,0)';
+        heroInner.style.opacity = String(Math.max(0, 1 - p * 1.6));
+      }
+      if (heroHint) heroHint.style.opacity = String(Math.max(0, 1 - p * 4));
+    }
+  }
+  window.addEventListener('scroll', onScrollParallax, { passive: true });
+  onScrollParallax();
 })();

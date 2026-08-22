@@ -2,11 +2,10 @@
 layout: default
 ---
 
-<!-- ============ Hero ============ -->
+<!-- ============ 全屏 Hero ============ -->
 <section class="hero" id="home">
   <canvas class="hero-particles" id="particles" aria-hidden="true"></canvas>
-  <div class="container">
-    <div class="hero-avatar" aria-hidden="true">h</div>
+  <div class="container hero-inner">
     <p class="hero-eyebrow">Developer · Builder</p>
     <h1 class="hero-name">Hi, I'm {{ site.title }}<span class="dot">.</span></h1>
     <p class="hero-motto">{{ site.tagline }}</p>
@@ -128,17 +127,27 @@ layout: default
   </div>
 </section>
 
-<!-- ============ 亮点 ============ -->
-<section class="section" id="others">
+<!-- ============ 最近文章（文章流） ============ -->
+<section class="section" id="blog">
   <div class="container">
     <div class="section-head">
-      <p class="section-kicker">Highlights</p>
-      <h2 class="section-title">近况亮点<span class="dot">.</span></h2>
+      <p class="section-kicker">Blog</p>
+      <h2 class="section-title">最近文章<span class="dot">.</span></h2>
     </div>
-    <div class="highlight-grid">
-      <div class="highlight-card"><div class="highlight-num">2</div><div class="highlight-label">项目</div></div>
-      <div class="highlight-card"><div class="highlight-num">1</div><div class="highlight-label">文章</div></div>
-      <div class="highlight-card"><div class="highlight-num">∞</div><div class="highlight-label">好奇心</div></div>
+    <div class="post-grid">
+      {% for post in site.posts limit:3 %}
+      <a class="post-card" href="{{ post.url | relative_url }}">
+        <span class="post-card-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 80 }}</p>
+        <span class="more">阅读 →</span>
+      </a>
+      {% else %}
+      <div class="empty-card">文章陆续上线中</div>
+      {% endfor %}
+    </div>
+    <div class="blog-more">
+      <a class="btn btn-ghost" href="{{ '/blog/' | relative_url }}">查看全部文章<span class="btn-arrow"> →</span></a>
     </div>
   </div>
 </section>
@@ -163,6 +172,6 @@ layout: default
   <a href="#skill" title="技能"></a>
   <a href="#project" title="项目"></a>
   <a href="#work" title="经历"></a>
-  <a href="#others" title="亮点"></a>
+  <a href="#blog" title="文章"></a>
   <a href="#contact" title="联系"></a>
 </nav>
