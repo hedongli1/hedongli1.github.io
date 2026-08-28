@@ -216,11 +216,12 @@
     oresize();
     window.addEventListener('resize', oresize);
 
-    // 三条椭圆环：中心偏右下，直径随视口缩放
+    // 四条椭圆环：中心偏右下，直径随视口缩放
     var rings = [
-      { rx: 0.34, ry: 0.20, tilt: -0.38, speed: 0.0006, hue: 0.55, size: 2.4 },
-      { rx: 0.26, ry: 0.16, tilt: 0.52,  speed: -0.0009, hue: 0.20, size: 1.8 },
-      { rx: 0.42, ry: 0.26, tilt: 0.10,  speed: 0.0004, hue: 0.75, size: 1.5 }
+      { rx: 0.38, ry: 0.22, tilt: -0.38, speed: 0.0006, hue: 0.55, size: 3.4 },
+      { rx: 0.30, ry: 0.18, tilt: 0.52,  speed: -0.0009, hue: 0.20, size: 2.6 },
+      { rx: 0.47, ry: 0.28, tilt: 0.10,  speed: 0.0004, hue: 0.75, size: 2.2 },
+      { rx: 0.22, ry: 0.13, tilt: -0.12, speed: 0.0011, hue: 0.35, size: 1.8 }
     ];
 
     // 金色系：品牌金 → 亮金渐变（与粒子层同源，独立取色）
@@ -254,36 +255,36 @@
         var x = ox + px * W * R.rx;
         var y = oy + py * H * R.ry;
 
-        // 轨道线（极淡）
+        // 轨道线（可见）
         octx.save();
         octx.translate(ox, oy);
         octx.rotate(R.tilt);
         octx.scale(1, R.ry / R.rx);
         octx.beginPath();
         octx.arc(0, 0, W * R.rx, 0, Math.PI * 2);
-        octx.strokeStyle = ocolor(R.hue, 0.10);
-        octx.lineWidth = 1;
+        octx.strokeStyle = ocolor(R.hue, 0.30);
+        octx.lineWidth = 1.4;
         octx.stroke();
         octx.restore();
 
         // 光点 + 光晕
         octx.beginPath();
         octx.arc(x, y, R.size, 0, Math.PI * 2);
-        octx.fillStyle = ocolor(R.hue, 0.9);
-        octx.shadowColor = ocolor(R.hue, 0.8);
-        octx.shadowBlur = 14;
+        octx.fillStyle = ocolor(R.hue, 1);
+        octx.shadowColor = ocolor(R.hue, 0.95);
+        octx.shadowBlur = 22;
         octx.fill();
         octx.shadowBlur = 0;
 
-        // 拖尾
-        var ta = a - 0.14;
+        // 拖尾（更长更亮）
+        var ta = a - 0.22;
         var tx = ox + Math.cos(ta) * W * R.rx;
         var ty = oy + Math.sin(ta) * H * R.ry;
         var grad = octx.createLinearGradient(x, y, tx, ty);
-        grad.addColorStop(0, ocolor(R.hue, 0.5));
+        grad.addColorStop(0, ocolor(R.hue, 0.7));
         grad.addColorStop(1, ocolor(R.hue, 0));
         octx.strokeStyle = grad;
-        octx.lineWidth = 1.4;
+        octx.lineWidth = 2;
         octx.beginPath();
         octx.moveTo(x, y);
         octx.lineTo(tx, ty);
