@@ -5,13 +5,13 @@
 # ============================================================
 
 title: hedongli1                 # 站点名（导航、页脚、SEO 用）
-tagline: 在代码与灵感之间搭建桥梁   # TODO 换成你的一句话定位
+tagline: 构建可验证的安全工具与全栈应用   # 一句话定位
 
-email: you@example.com           # TODO 替换为真实邮箱（用于 RSS / SEO）
-description: >-                  # TODO 换成你的一句话中文简介
-  一个持续学习、持续构建的开发者的个人博客与作品集。
-description_en: >-               # TODO 换成你的一句话英文简介
-  A developer building in public — notes, projects, and thoughts.
+email: xianyvzhen@outlook.com           # 真实邮箱（用于 RSS / SEO）
+description: >-                  # 一句话中文简介
+  一个专注全栈开发与安全工具构建的开发者，用代码解决真实问题，持续在 GitHub 上构建与分享。
+description_en: >-               # 一句话英文简介
+  A developer building full-stack apps and security tools in public.
 
 url: "https://hedongli1.github.io"   # 你的站点地址（上线后就是这个）
 baseurl: ""                          # 站点托管在仓库根目录时保持空字符串
@@ -23,7 +23,7 @@ lang: zh-CN
 # ---------------- 社交链接（TODO 按需增删、填真实地址）----------------
 social:
   github: https://github.com/hedongli1
-  email: mailto:you@example.com        # TODO 替换真实邮箱
+  email: mailto:xianyvzhen@outlook.com        # 真实邮箱
   # twitter: https://twitter.com/your_handle
   # linkedin: https://linkedin.com/in/your_handle
   # zhihu: https://www.zhihu.com/people/your_handle

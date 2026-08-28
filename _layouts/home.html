@@ -27,21 +27,20 @@ layout: default
     </div>
     <div class="about-grid">
       <div class="about-text">
-        <p>{{ site.description }}</p>
-        <!-- TODO：用 2-3 句写清楚你是谁、在做什么、能带来什么价值 -->
+        <p>我是一名专注全栈开发与安全工具构建的开发者。用 Node.js 从零手写后端、用 Vue 3 搭建前端、用 Docker 与 GitHub Actions 打通交付，让每个项目都能被 CI 验证、被一键复现。</p>
         <p>{{ site.description_en }}</p>
       </div>
       <div class="info-card">
         <div class="info-row"><span class="k">Name</span><span class="v">{{ site.title }}</span></div>
-        <div class="info-row"><span class="k">Focus</span><span class="v">TODO 你的方向</span></div>
-        <div class="info-row"><span class="k">Location</span><span class="v">TODO 城市</span></div>
+        <div class="info-row"><span class="k">Focus</span><span class="v">全栈开发 · 安全工具</span></div>
+        <div class="info-row"><span class="k">Location</span><span class="v">中国 · 远程</span></div>
         <div class="info-row"><span class="k">GitHub</span><span class="v">{{ site.github_username }}</span></div>
         <div class="info-row"><span class="k">Email</span><span class="v">{{ site.email }}</span></div>
-        <div class="info-row"><span class="k">Open to</span><span class="v">TODO 机会类型</span></div>
+        <div class="info-row"><span class="k">Open to</span><span class="v">合作交流 · 开源项目</span></div>
       </div>
     </div>
     <div class="stats-band">
-      <div class="stat-item"><div class="stat-num" data-count="2">0</div><div class="stat-label">精选项目</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="4">0</div><div class="stat-label">精选项目</div></div>
       <div class="stat-item"><div class="stat-num" data-count="{{ site.posts.size }}">0</div><div class="stat-label">已发布文章</div></div>
       <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">持续探索</div></div>
     </div>
@@ -54,28 +53,28 @@ layout: default
     <div class="section-head">
       <p class="section-kicker">Skills</p>
       <h2 class="section-title">技术栈<span class="dot">.</span></h2>
-      <p class="section-lead"><!-- TODO：一句话概括你的技术方向 -->用代码解决问题，也在持续拓宽边界。</p>
+      <p class="section-lead">从前端到后端再到安全工具，用零依赖与 Node 内置能力解决真实问题。</p>
     </div>
     <div class="skill-grid">
       <div class="skill-item">
         <div class="skill-head"><span class="skill-name">前端开发</span><span class="skill-level">85%</span></div>
         <div class="skill-bar"><div class="skill-fill" data-level="85"></div></div>
-        <div class="skill-tags"><span class="skill-tag">TypeScript</span><span class="skill-tag">React</span><span class="skill-tag">Vue</span></div>
+        <div class="skill-tags"><span class="skill-tag">Vue 3</span><span class="skill-tag">Vite</span><span class="skill-tag">JavaScript</span><span class="skill-tag">ECharts</span></div>
       </div>
       <div class="skill-item">
-        <div class="skill-head"><span class="skill-name">后端开发</span><span class="skill-level">70%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-level="70"></div></div>
-        <div class="skill-tags"><span class="skill-tag">Node.js</span><span class="skill-tag">Python</span></div>
+        <div class="skill-head"><span class="skill-name">后端开发</span><span class="skill-level">75%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-level="75"></div></div>
+        <div class="skill-tags"><span class="skill-tag">Node.js</span><span class="skill-tag">Express</span><span class="skill-tag">JWT</span><span class="skill-tag">RESTful</span></div>
       </div>
       <div class="skill-item">
         <div class="skill-head"><span class="skill-name">工程化</span><span class="skill-level">75%</span></div>
         <div class="skill-bar"><div class="skill-fill" data-level="75"></div></div>
-        <div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">Linux</span><span class="skill-tag">Docker</span></div>
+        <div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">Docker</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">CI/CD</span></div>
       </div>
       <div class="skill-item">
-        <div class="skill-head"><span class="skill-name">数据库</span><span class="skill-level">60%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-level="60"></div></div>
-        <div class="skill-tags"><span class="skill-tag">PostgreSQL</span><span class="skill-tag">Redis</span></div>
+        <div class="skill-head"><span class="skill-name">数据库</span><span class="skill-level">65%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-level="65"></div></div>
+        <div class="skill-tags"><span class="skill-tag">SQLite</span><span class="skill-tag">node:sqlite</span><span class="skill-tag">PostgreSQL</span></div>
       </div>
     </div>
   </div>
@@ -89,24 +88,29 @@ layout: default
       <h2 class="section-title">精选项目<span class="dot">.</span></h2>
     </div>
     <div class="project-grid">
-      <!-- TODO：把「项目一 / 项目二」换成真实仓库，链接改成对应地址 -->
-      <a class="project-card" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
-        <div class="proj-top"><span class="project-tag">TODO</span><span class="project-lang">TypeScript</span></div>
-        <h3>项目一</h3>
-        <p>一句话说清这个项目解决了什么问题。</p>
+      <a class="project-card" href="https://github.com/hedongli1/aiscan" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">安全工具</span><span class="project-lang">Node.js</span></div>
+        <h3>aiscan</h3>
+        <p>零依赖的 AI 辅助代码安全审计：236 条规则 + 熵启发式密钥检测，一行 Action 接入 GitHub。</p>
         <div class="project-links"><span>查看 →</span></div>
       </a>
-      <a class="project-card" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
-        <div class="proj-top"><span class="project-tag">TODO</span><span class="project-lang">Python</span></div>
-        <h3>项目二</h3>
-        <p>一句话说清这个项目解决了什么问题。</p>
+      <a class="project-card" href="https://github.com/hedongli1/ledger-app" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">全栈应用</span><span class="project-lang">Vue 3 · Express</span></div>
+        <h3>记账本 Ledger</h3>
+        <p>注册登录 → 记收支 → 统计图表的个人记账全栈应用，SQLite 单文件存储，Docker 一键启动。</p>
         <div class="project-links"><span>查看 →</span></div>
       </a>
-      <a class="project-card project-card-empty" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
-        <div class="proj-top"><span class="project-tag">coming soon</span></div>
-        <h3>你的下一个项目</h3>
-        <p>仓库建好后，把它挂到这里。</p>
-        <div class="project-links"><span>GitHub →</span></div>
+      <a class="project-card" href="https://github.com/hedongli1/purple-team-lab" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">安全实验</span><span class="project-lang">Node.js</span></div>
+        <h3>紫队实验台</h3>
+        <p>攻击模拟 → 检测验证的可控闭环：12 个场景 + 12 条 Sigma 规则，输出覆盖率报告。</p>
+        <div class="project-links"><span>查看 →</span></div>
+      </a>
+      <a class="project-card" href="https://github.com/hedongli1/hedongli1.github.io" target="_blank" rel="noopener">
+        <div class="proj-top"><span class="project-tag">本站</span><span class="project-lang">Jekyll</span></div>
+        <h3>个人主页与博客</h3>
+        <p>黑金风格的作品集 + 博客，承载项目沉淀与技术复盘，托管在 GitHub Pages。</p>
+        <div class="project-links"><span>查看 →</span></div>
       </a>
     </div>
   </div>
@@ -123,11 +127,31 @@ layout: default
       <li class="timeline-item">
         <span class="timeline-dot" aria-hidden="true"></span>
         <span class="timeline-date">2026.08</span>
+        <h3 class="timeline-title">aiscan：零依赖安全审计工具</h3>
+        <span class="timeline-org">开源项目 · GitHub Action</span>
+        <p class="timeline-text">从零开发零依赖的静态安全审计工具，236 条规则 + 熵启发式密钥检测，已发布 GitHub Packages 与 Action。</p>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-dot" aria-hidden="true"></span>
+        <span class="timeline-date">2026.08</span>
+        <h3 class="timeline-title">紫队实验台：攻击模拟 → 检测验证</h3>
+        <span class="timeline-org">安全实验平台</span>
+        <p class="timeline-text">构建可控闭环：12 个攻击场景 + 12 条 Sigma-lite 规则，输出覆盖率报告，定位检测缺口。</p>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-dot" aria-hidden="true"></span>
+        <span class="timeline-date">2026.08</span>
+        <h3 class="timeline-title">记账本 Ledger：全栈应用</h3>
+        <span class="timeline-org">Vue 3 + Express + SQLite</span>
+        <p class="timeline-text">手写注册登录、记账 CRUD、统计图表，15 个端到端测试，Docker 一键启动。</p>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-dot" aria-hidden="true"></span>
+        <span class="timeline-date">2026.08</span>
         <h3 class="timeline-title">加入 GitHub，开始持续构建</h3>
         <span class="timeline-org">从这里开始记录</span>
         <p class="timeline-text">从零搭建个人主页与博客，开始沉淀项目与思考。</p>
       </li>
-      <!-- TODO：补充教育 / 工作 / 开源经历，每条加一个 timeline-item -->
     </ol>
   </div>
 </section>
