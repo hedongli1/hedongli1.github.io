@@ -202,6 +202,98 @@
     tick();
   }
 
+  /* ---------- 轨道环：金色光点绕椭圆环运行（复刻 lhwu1 的 #orbit） ---------- */
+  var orbit = document.getElementById('orbit');
+  if (orbit) {
+    var octx = orbit.getContext('2d');
+    var OW = 0, OH = 0;
+    function oresize() {
+      var dpr = window.devicePixelRatio || 1;
+      OW = orbit.width = window.innerWidth * dpr;
+      OH = orbit.height = window.innerHeight * dpr;
+      octx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    oresize();
+    window.addEventListener('resize', oresize);
+
+    // 三条椭圆环：中心偏右下，直径随视口缩放
+    var rings = [
+      { rx: 0.34, ry: 0.20, tilt: -0.38, speed: 0.0006, hue: 0.55, size: 2.4 },
+      { rx: 0.26, ry: 0.16, tilt: 0.52,  speed: -0.0009, hue: 0.20, size: 1.8 },
+      { rx: 0.42, ry: 0.26, tilt: 0.10,  speed: 0.0004, hue: 0.75, size: 1.5 }
+    ];
+
+    // 金色系：品牌金 → 亮金渐变（与粒子层同源，独立取色）
+    function ocssVar(name, fb) { return getComputedStyle(root).getPropertyValue(name).trim() || fb; }
+    function ohexToRgb(h) {
+      h = h.replace('#', '');
+      if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+      var n = parseInt(h, 16);
+      return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+    var oCA = ohexToRgb(ocssVar('--brand', '#F5A623'));
+    var oCB = ohexToRgb(ocssVar('--brand-strong', '#FBBF24'));
+
+    function ocolor(mix, alpha) {
+      var r = Math.round(oCA.r + (oCB.r - oCA.r) * mix);
+      var g = Math.round(oCA.g + (oCB.g - oCA.g) * mix);
+      var b = Math.round(oCA.b + (oCB.b - oCA.b) * mix);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    }
+
+    var cx = 0.68, cy = 0.46; // 轨道环中心（相对视口）
+    function otick(ts) {
+      var t = ts || 0;
+      var W = window.innerWidth, H = window.innerHeight;
+      octx.clearRect(0, 0, W, H);
+      var ox = W * cx, oy = H * cy;
+      for (var i = 0; i < rings.length; i++) {
+        var R = rings[i];
+        var a = t * R.speed;
+        var px = Math.cos(a), py = Math.sin(a);
+        var x = ox + px * W * R.rx;
+        var y = oy + py * H * R.ry;
+
+        // 轨道线（极淡）
+        octx.save();
+        octx.translate(ox, oy);
+        octx.rotate(R.tilt);
+        octx.scale(1, R.ry / R.rx);
+        octx.beginPath();
+        octx.arc(0, 0, W * R.rx, 0, Math.PI * 2);
+        octx.strokeStyle = ocolor(R.hue, 0.10);
+        octx.lineWidth = 1;
+        octx.stroke();
+        octx.restore();
+
+        // 光点 + 光晕
+        octx.beginPath();
+        octx.arc(x, y, R.size, 0, Math.PI * 2);
+        octx.fillStyle = ocolor(R.hue, 0.9);
+        octx.shadowColor = ocolor(R.hue, 0.8);
+        octx.shadowBlur = 14;
+        octx.fill();
+        octx.shadowBlur = 0;
+
+        // 拖尾
+        var ta = a - 0.14;
+        var tx = ox + Math.cos(ta) * W * R.rx;
+        var ty = oy + Math.sin(ta) * H * R.ry;
+        var grad = octx.createLinearGradient(x, y, tx, ty);
+        grad.addColorStop(0, ocolor(R.hue, 0.5));
+        grad.addColorStop(1, ocolor(R.hue, 0));
+        octx.strokeStyle = grad;
+        octx.lineWidth = 1.4;
+        octx.beginPath();
+        octx.moveTo(x, y);
+        octx.lineTo(tx, ty);
+        octx.stroke();
+      }
+      requestAnimationFrame(otick);
+    }
+    requestAnimationFrame(otick);
+  }
+
   /* ---------- 首屏滚动视差（内容上移渐隐，增强纵深） ---------- */
   var heroEl = document.querySelector('.hero');
   var heroInner = heroEl ? heroEl.querySelector('.container') : null;
