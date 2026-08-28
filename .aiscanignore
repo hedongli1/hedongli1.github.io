@@ -1,0 +1,7 @@
+# aiscan 忽略清单（hedongli1.github.io 博客）
+# 博客文章正文包含"讲解漏洞"的示例代码片段（讲 SQL 注入/密钥检测原理时的演示代码），
+# 属于文档内容而非真实项目代码，已人工复核为误报。
+
+# 讲 aiscan 开发过程的两篇文章（含漏洞示例与脱敏密钥样本）
+_posts/2026-08-26-aiscan.md
+_posts/2026-08-26-aiscan-action-debug.md
