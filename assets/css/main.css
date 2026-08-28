@@ -223,8 +223,13 @@ img { max-width: 100%; display: block; }
 
 /* ---------- 项目 ---------- */
 .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-.project-card { display: flex; flex-direction: column; gap: 12px; min-height: 200px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 26px; box-shadow: var(--shadow-card); color: var(--ink); transition: transform .18s ease, border-color .18s ease; }
-.project-card:hover { transform: translateY(-4px); border-color: var(--brand-soft); color: var(--ink); }
+.project-card { display: flex; flex-direction: column; gap: 12px; min-height: 200px; background: rgba(26, 22, 16, 0.5); border: 1px solid rgba(245, 166, 35, 0.14); border-radius: var(--radius-card); padding: 0; overflow: hidden; box-shadow: var(--shadow-card); color: var(--ink); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.project-card:hover { transform: translateY(-4px); border-color: var(--brand-soft); color: var(--ink); background: rgba(26, 22, 16, 0.66); }
+/* 项目预览图：卡片顶部大图 */
+.project-thumb { height: 150px; width: 100%; overflow: hidden; position: relative; flex-shrink: 0; }
+.project-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.project-card:hover .project-thumb img { transform: scale(1.05); }
+.project-body { display: flex; flex-direction: column; gap: 12px; padding: 20px 26px 26px; flex: 1; }
 .project-card .proj-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .project-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: .02em; padding: 3px 8px; border-radius: 6px; background: var(--brand-tint); color: var(--brand); border: 1px solid var(--brand-soft); font-weight: 500; }
 .project-lang { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
