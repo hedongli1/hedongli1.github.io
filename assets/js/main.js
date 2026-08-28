@@ -113,6 +113,46 @@
     });
     window.addEventListener('blur', function () { mouse.x = -9999; mouse.y = -9999; });
 
+    // 闪烁星星：静止但大小/透明度周期性呼吸明灭，打破均匀感
+    var twinkles = [];
+    var NT = Math.min(90, Math.max(40, Math.round(W * H / 16000)));
+    for (var t2 = 0; t2 < NT; t2++) {
+      twinkles.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 2.2 + 0.4,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.0008 + Math.random() * 0.0022,
+        mix: Math.random()
+      });
+    }
+
+    // 金色尘埃：细小光点缓慢上浮，增加纵深
+    var dust = [];
+    var ND = Math.min(60, Math.max(25, Math.round(W * H / 22000)));
+    for (var d = 0; d < ND; d++) {
+      dust.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.2 + 0.3,
+        vy: -(0.12 + Math.random() * 0.3),
+        drift: (Math.random() - 0.5) * 0.15,
+        mix: Math.random()
+      });
+    }
+
+    // 星芒亮点：少量带十字光芒的大星，做视觉焦点
+    var sparkles = [];
+    var NS = 6;
+    for (var s = 0; s < NS; s++) {
+      sparkles.push({
+        x: Math.random() * W * 0.85 + W * 0.05,
+        y: Math.random() * H * 0.7 + H * 0.1,
+        r: 1.6 + Math.random() * 1.6,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.0006 + Math.random() * 0.0012,
+        mix: Math.random() * 0.5 + 0.3
+      });
+    }
+
     // 流星：周期性划过的金色光尾
     function spawnMeteor() {
       meteors.push({
@@ -128,7 +168,8 @@
 
     var LINK_DIST = 130;
 
-    function tick() {
+    function tick(now) {
+      now = now || 0;
       ctx.clearRect(0, 0, W, H);
 
       // 星空连线粒子
@@ -195,6 +236,59 @@
         ctx.arc(mt.x, mt.y, 1.7, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(255,255,255,' + (0.9 * mt.life) + ')';
         ctx.fill();
+      }
+
+      // 闪烁星星：呼吸明灭
+      for (var tw = 0; tw < twinkles.length; tw++) {
+        var T = twinkles[tw];
+        var pulse = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(now * T.speed + T.phase));
+        ctx.beginPath();
+        ctx.arc(T.x, T.y, T.r * (0.7 + 0.3 * pulse), 0, Math.PI * 2);
+        ctx.fillStyle = goldRgba(T.mix, 0.25 + 0.6 * pulse);
+        ctx.fill();
+      }
+
+      // 金色尘埃：缓慢上浮 + 左右漂移，到底部后回到顶部
+      for (var du = 0; du < dust.length; du++) {
+        var D = dust[du];
+        D.y += D.vy; D.x += D.drift;
+        if (D.y < -10) { D.y = H + 10; D.x = Math.random() * W; }
+        if (D.x < -10) D.x = W + 10;
+        if (D.x > W + 10) D.x = -10;
+        ctx.beginPath();
+        ctx.arc(D.x, D.y, D.r, 0, Math.PI * 2);
+        ctx.fillStyle = goldRgba(D.mix, 0.4);
+        ctx.fill();
+      }
+
+      // 星芒亮点：带十字光芒的大星，缓慢明灭
+      for (var sp = 0; sp < sparkles.length; sp++) {
+        var S = sparkles[sp];
+        var glow = 0.5 + 0.5 * Math.sin(now * S.speed + S.phase);
+        var cx2 = S.x, cy2 = S.y;
+        var len = S.r * 5.5 * (0.7 + 0.3 * glow);
+        // 十字光芒
+        ctx.strokeStyle = goldRgba(S.mix, 0.35 * glow);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(cx2 - len, cy2); ctx.lineTo(cx2 + len, cy2);
+        ctx.moveTo(cx2, cy2 - len); ctx.lineTo(cx2, cy2 + len);
+        ctx.stroke();
+        // 斜向细光（较短）
+        var len2 = len * 0.45;
+        ctx.strokeStyle = goldRgba(S.mix, 0.2 * glow);
+        ctx.beginPath();
+        ctx.moveTo(cx2 - len2, cy2 - len2); ctx.lineTo(cx2 + len2, cy2 + len2);
+        ctx.moveTo(cx2 + len2, cy2 - len2); ctx.lineTo(cx2 - len2, cy2 + len2);
+        ctx.stroke();
+        // 中心亮核
+        ctx.beginPath();
+        ctx.arc(cx2, cy2, S.r * (0.8 + 0.3 * glow), 0, Math.PI * 2);
+        ctx.fillStyle = goldRgba(S.mix, 0.95);
+        ctx.shadowColor = goldRgba(S.mix, 0.9);
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
       }
 
       requestAnimationFrame(tick);
