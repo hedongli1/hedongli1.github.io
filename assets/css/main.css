@@ -108,12 +108,24 @@ img { max-width: 100%; display: block; }
 
 /* ---------- 全页固定背景（星云 + 星空粒子，铺满整页） ---------- */
 .bg-fx { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-/* 最底层：AI 生成的深色星云背景图（铺满 + 居中裁切） */
-.bg-image { position: absolute; inset: 0; z-index: 0;
+/* 最底层：AI 生成的深色星云背景图（铺满 + 居中裁切 + 缓慢漂浮 + 金色调滤镜） */
+.bg-image { position: absolute; inset: -5%; z-index: 0;
   background-image: url('/assets/images/bg-nebula.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  filter: saturate(.72) hue-rotate(-16deg) brightness(.82) sepia(.22);
+  animation: bgDrift 36s ease-in-out infinite alternate;
+}
+/* 图片之上的金色氛围叠加层：把深蓝底色统一压向黑金 */
+.bg-image::after { content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(110% 80% at 50% 46%, rgba(13,11,9,.10) 0%, rgba(13,11,9,.66) 100%),
+    linear-gradient(120deg, rgba(245,166,35,.14) 0%, transparent 40%, rgba(251,146,60,.10) 100%);
+}
+@keyframes bgDrift {
+  0%   { transform: translate3d(0, 0, 0) scale(1.0); }
+  100% { transform: translate3d(-1.6%, -1.2%, 0) scale(1.08); }
 }
 .bg-nebula { position: absolute; inset: 0;
   background:
