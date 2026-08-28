@@ -133,8 +133,45 @@ img { max-width: 100%; display: block; }
   opacity: .5;
 }
 
+/* 旋转光锥：金色光束从中心扫出，缓慢旋转（复刻 lhwu1 的 conic 光轮） */
+.bg-conic { position: absolute; inset: 0; opacity: .55;
+  background:
+    repeating-conic-gradient(from 0deg,
+      rgba(245,166,35,.10) 0deg 3deg,
+      transparent 3deg 14deg);
+  mask-image: radial-gradient(circle at 68% 42%, #000 0 16%, transparent 46%);
+  -webkit-mask-image: radial-gradient(circle at 68% 42%, #000 0 16%, transparent 46%);
+  animation: conicSpin 64s linear infinite;
+}
+@keyframes conicSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+/* 扫光光束：一道亮金弧，随光锥同轴旋转，制造掠过的流光 */
+.bg-conic::before { content: ''; position: absolute; inset: 0;
+  background: conic-gradient(from 120deg,
+    transparent 0 68%,
+    rgba(251,191,36,.34) 82%,
+    rgba(251,191,36,.06) 92%,
+    transparent 100%);
+  mask-image: radial-gradient(circle at 68% 42%, #000 0 18%, transparent 50%);
+  -webkit-mask-image: radial-gradient(circle at 68% 42%, #000 0 18%, transparent 50%);
+}
+/* 前景纵深遮罩：四角暗角 + 左右浅→深 + 顶部渐隐（复刻 lhwu1 的多层遮罩） */
+.bg-vignette { position: absolute; inset: 0; opacity: .9;
+  background:
+    radial-gradient(120% 90% at 50% 42%, transparent 52%, rgba(13,11,9,.55) 100%),
+    linear-gradient(90deg, rgba(13,11,9,.82) 0%, rgba(13,11,9,.20) 42%, rgba(13,11,9,.55) 100%),
+    linear-gradient(0deg, rgba(13,11,9,.72) 0%, transparent 40%);
+}
+
 /* 轨道环：光点绕行 canvas，置于粒子层之上、内容层之下 */
 #orbit { z-index: 1; opacity: .5; }
+
+/* 明暗主题适配：浅色模式下削弱网格/光锥/暗角，避免晃眼 */
+[data-theme="light"] .bg-grid { opacity: .22; }
+[data-theme="light"] .bg-conic { opacity: .28; }
+[data-theme="light"] .bg-vignette { opacity: .5; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 96px 0 64px; background: transparent; }
