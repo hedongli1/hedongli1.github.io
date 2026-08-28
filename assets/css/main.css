@@ -108,6 +108,13 @@ img { max-width: 100%; display: block; }
 
 /* ---------- 全页固定背景（星云 + 星空粒子，铺满整页） ---------- */
 .bg-fx { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+/* 最底层：AI 生成的深色星云背景图（铺满 + 居中裁切） */
+.bg-image { position: absolute; inset: 0; z-index: 0;
+  background-image: url('/assets/images/bg-nebula.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .bg-nebula { position: absolute; inset: 0;
   background:
     radial-gradient(900px 480px at 72% 20%, rgba(245,166,35,.20), transparent 70%),
