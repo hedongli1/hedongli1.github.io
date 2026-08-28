@@ -1,7 +1,6 @@
 # ============================================================
 # 站点配置 · hedongli1 个人博客
 # 部署到 GitHub Pages 后，改这里的内容即可，无需动代码
-# 所有带 TODO 的字段：上线前请替换为你的真实信息
 # ============================================================
 
 title: hedongli1                 # 站点名（导航、页脚、SEO 用）
@@ -20,10 +19,10 @@ github_username: hedongli1          # 你的 GitHub 用户名（真实）
 # 语言默认中文
 lang: zh-CN
 
-# ---------------- 社交链接（TODO 按需增删、填真实地址）----------------
+# ---------------- 社交链接（按需增删、填真实地址）----------------
 social:
   github: https://github.com/hedongli1
-  email: mailto:xianyvzhen@outlook.com        # 真实邮箱
+  email: mailto:xianyvzhen@outlook.com   # 真实邮箱
   # twitter: https://twitter.com/your_handle
   # linkedin: https://linkedin.com/in/your_handle
   # zhihu: https://www.zhihu.com/people/your_handle
