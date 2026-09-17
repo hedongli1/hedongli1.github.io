@@ -7,7 +7,7 @@ tags: [GitHub, GitHub Actions, 逆向工程, 自动化, 开源, API]
 
 我又给自己加了一个常驻机器人：[reverse-radar](https://github.com/hedongli1/reverse-radar) —— **逆向工程动向雷达**，每天追踪二进制逆向 / 协议逆向方向的开源新晋与飙升项目。
 
-看板在这里：**https://hedongli1.github.io/reverse-radar/**
+看板在这里：https://hedongli1.github.io/reverse-radar/
 
 搭起来不难，难的是**让搜索结果别跑歪**。这篇记录四个坑，每个都是实测撞出来的——而且其中三个会静默地毁掉数据，不报错、不中断，只是让你拿到一堆看似合理的垃圾。
 
